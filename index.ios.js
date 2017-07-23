@@ -16,16 +16,17 @@ export default class Native extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+        <View style={[styles.base, styles.box1]}>
+          <Text style={styles.text}>I am 2.</Text>
+        </View>
+
+        <View style={[styles.base, styles.box2]}>
+          <Text style={styles.text}>I am 5.</Text>
+        </View>
+
+        <View style={[styles.base, styles.box3]}>
+          <Text style={styles.text}>I am 1.</Text>
+        </View>
       </View>
     );
   }
@@ -34,19 +35,26 @@ export default class Native extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  text: {
+    fontSize: 24,
+    color: 'white',
+  },
+  base: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  box1: {
+    flex: 2,
+    backgroundColor: 'black'
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  box2: {
+    flex: 5,
+    backgroundColor: 'red',
+  },
+  box3: {
+    flex: 1,
+    backgroundColor: 'yellow',
   },
 });
 
