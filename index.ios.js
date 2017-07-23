@@ -36,11 +36,20 @@ export default class Native extends Component {
     } = this.state;
     const _list = list.concat();
     const key = new Date().getTime();
-    _list.push({ key: key, text: text });
+    _list.push({ key: key, text: text, done: false });
     this.setState({
       text: '',
       list: _list,
     });
+  }
+
+  _onPressItem = (selectedItem) => {
+    const { list } = this.state;
+    const _list = list.map((item) => {
+      if (selectedItem.key === item.key) { item.done = !item.done }
+      return item
+    });
+    this.setState({ list: _list });
   }
 
   render() {
@@ -67,8 +76,12 @@ export default class Native extends Component {
         </View>
         <FlatList
           data={list}
-          renderItem={({item}) => <Text style={styles.itemText}>{item.text}</Text>}
           styles={styles.list}
+          renderItem={({item}) => (
+            <TouchableOpacity onPress={() => this._onPressItem(item)}>
+              <Text style={item.done ? [styles.itemText, styles.itemTextDone] : styles.itemText}>{item.text}</Text>
+            </TouchableOpacity>
+          )}
         />
       </View>
     );
@@ -109,6 +122,10 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 22,
     margin: 10,
+  },
+  itemTextDone: {
+    color: 'gray',
+    textDecorationLine: 'line-through',
   },
 });
 
