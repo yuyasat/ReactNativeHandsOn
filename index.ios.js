@@ -9,24 +9,36 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  TextInput
 } from 'react-native';
 
 export default class Native extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      text: '',
+    }
+  }
+
+  _onChangeText = (text) => {
+    this.setState({ text });
+  }
+
   render() {
+    const {
+      text,
+    } = this.state;
+
     return (
       <View style={styles.container}>
-        <View style={[styles.base, styles.box1]}>
-          <Text style={styles.text}>I am 2.</Text>
-        </View>
-
-        <View style={[styles.base, styles.box2]}>
-          <Text style={styles.text}>I am 5.</Text>
-        </View>
-
-        <View style={[styles.base, styles.box3]}>
-          <Text style={styles.text}>I am 1.</Text>
-        </View>
+        <TextInput
+          style={styles.input}
+          onChangeText={this._onChangeText}
+          underlineColorAndroid="transparent"
+        />
+        <Text>{text}</Text>
       </View>
     );
   }
@@ -35,6 +47,14 @@ export default class Native extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  input: {
+    height: 30,
+    width: 200,
+    borderBottomWidth: 1,
+    borderBottomColor: '#008080',
   },
   text: {
     fontSize: 24,
