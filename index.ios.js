@@ -9,8 +9,10 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
   View,
-  TextInput
 } from 'react-native';
 
 export default class Native extends Component {
@@ -19,6 +21,7 @@ export default class Native extends Component {
 
     this.state = {
       text: '',
+      list: [],
     }
   }
 
@@ -26,19 +29,47 @@ export default class Native extends Component {
     this.setState({ text });
   }
 
+  _onPress = () => {
+    const {
+      list,
+      text,
+    } = this.state;
+    const _list = list.concat();
+    const key = new Date().getTime();
+    _list.push({ key: key, text: text });
+    this.setState({
+      text: '',
+      list: _list,
+    });
+  }
+
   render() {
     const {
+      list,
       text,
     } = this.state;
 
     return (
       <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          onChangeText={this._onChangeText}
-          underlineColorAndroid="transparent"
+        <View style={styles.inputArea}>
+          <TextInput
+            style={styles.input}
+            onChangeText={this._onChangeText}
+            underlineColorAndroid="transparent"
+            value={text}
+          />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={this._onPress}
+          >
+            <Text style={styles.buttonText}>Add</Text>
+          </TouchableOpacity>
+        </View>
+        <FlatList
+          data={list}
+          renderItem={({item}) => <Text style={styles.itemText}>{item.text}</Text>}
+          styles={styles.list}
         />
-        <Text>{text}</Text>
       </View>
     );
   }
@@ -50,31 +81,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  inputArea: {
+    flexDirection: 'row',
+    marginTop: 64,
+  },
   input: {
     height: 30,
     width: 200,
     borderBottomWidth: 1,
     borderBottomColor: '#008080',
+    marginRight: 20,
   },
-  text: {
-    fontSize: 24,
-    color: 'white',
-  },
-  base: {
+  button: {
+    width: 80,
+    height: 40,
+    backgroundColor: '#006060',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  box1: {
-    flex: 2,
-    backgroundColor: 'black'
+  buttonText: {
+    color: 'white',
+    fontSize: 20,
   },
-  box2: {
-    flex: 5,
-    backgroundColor: 'red',
+  list: {
+    width: 300,
   },
-  box3: {
-    flex: 1,
-    backgroundColor: 'yellow',
+  itemText: {
+    fontSize: 22,
+    margin: 10,
   },
 });
 
